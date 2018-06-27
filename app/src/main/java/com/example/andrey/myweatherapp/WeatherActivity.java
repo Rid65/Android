@@ -1,15 +1,24 @@
 package com.example.andrey.myweatherapp;
 
+import android.content.Intent;
 import android.os.PersistableBundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class WeatherActivity extends AppCompatActivity {
 
     private static final String TAG = "WeatherActivity";
+    private ConstraintLayout humidity_layout;
+    private ConstraintLayout speed_layout;
+    private ConstraintLayout pressure_layout;
+    private TextView city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,25 @@ public class WeatherActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "onCreate() - повторный запуск", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "onCreate() - повторный запуск");
+        }
+
+        city = findViewById(R.id.city);
+        humidity_layout = findViewById(R.id.humidity_layout);
+        speed_layout = findViewById(R.id.speed_layout);
+        pressure_layout = findViewById(R.id.pressure_layout);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            city.setText(bundle.getString("city"));
+            if (!bundle.getBoolean("humidity")) {
+                humidity_layout.setVisibility(View.INVISIBLE);
+            }
+            if (!bundle.getBoolean("speed")) {
+                speed_layout.setVisibility(View.INVISIBLE);
+            }
+            if (!bundle.getBoolean("pressure")) {
+                pressure_layout.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
