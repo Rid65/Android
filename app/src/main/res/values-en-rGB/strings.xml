@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyWeatherApp</string>
+    <string name="country">Irkutsk</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="city">City:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="speed">Speed:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="button_start">Start</string>
+</resources>

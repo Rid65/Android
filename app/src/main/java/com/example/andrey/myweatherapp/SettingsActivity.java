@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private EditText city;
     private CheckBox humidity;
@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        /*setContentView(R.layout.activity_settings);
 
         city = findViewById(R.id.city);
         humidity = findViewById(R.id.humidity);
@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startSettingsActivity();
             }
-        });
+        });*/
 
     }
 
