@@ -1,0 +1,48 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context="com.geekbrains.weather.WeatherFragment"
+    android:paddingTop="45dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/baseFonColor"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/ivWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rain_3x"
+            />
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivWeather"
+            android:layout_centerHorizontal="true"
+            android:text="@string/country"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="1dp"/>
+
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_country"
+            android:layout_centerHorizontal="true"
+            android:text="+18"
+            android:textColor="@android:color/white"
+            android:textSize="80sp"
+            android:layout_marginTop="1dp"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
