@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class BaseActivity extends AppCompatActivity
         implements BaseView.View, BaseFragment.Callback, NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String ARG_NAME = "ARG_NAME";
+    static final String ARG_NAME = "ARG_NAME";
     private static final String TEXT = "TEXT";
 
     private FloatingActionButton fab;
@@ -138,6 +138,9 @@ public class BaseActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_info) {
             // Handle the camera action
+        } else if (id == R.id.nav_future_weather) {
+            Intent intent = new Intent(this, FutureWeatherActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
