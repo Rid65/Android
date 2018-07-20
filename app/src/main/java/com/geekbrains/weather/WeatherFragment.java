@@ -65,20 +65,20 @@ public class WeatherFragment extends BaseFragment implements /*Observer,*/ Creat
 
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-        textView = view.findViewById(R.id.tv_country);
+        /*textView = getBaseActivity().findViewById(R.id.tv_country);
         if (country != null && country.length() > 0) {
             textView.setVisibility(View.VISIBLE);
             textView.setText(country);
         } else {
             textView.setVisibility(View.GONE);
-        }
+        }*/
 
 
 
         //-- в зависимости от ориентации будем менять параметры элементов view, чтобы смотрелось красиво
         if (isHorizontalOrientation()) {
             //-- уменьшим ширину и высоту изображения
-            int widthDim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
+            /*int widthDim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
             int heightDim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
             ImageView ivWeather = view.findViewById(R.id.ivWeather);
             ivWeather.getLayoutParams().height = heightDim;
@@ -87,7 +87,7 @@ public class WeatherFragment extends BaseFragment implements /*Observer,*/ Creat
 
             //-- уменьшим размер текста
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-
+*/
             //-- уменьшим размер текста
             TextView temperature = view.findViewById(R.id.temperature);
             temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
@@ -102,7 +102,7 @@ public class WeatherFragment extends BaseFragment implements /*Observer,*/ Creat
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ARG_CITY, textView.getText().toString().trim());
+        //outState.putString(ARG_CITY, textView.getText().toString().trim());
     }
 
     @Override

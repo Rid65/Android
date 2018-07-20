@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +16,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by shkryaba on 24/06/2018.
  */
 
 public class CreateActionFragment extends BaseFragment {
 
-    private EditText edittext;
-    private EditText etName;
+    private TextInputEditText etCity;
+    private TextInputEditText etName;
     private Button btnApply;
     OnHeadlineSelectedListener mCallback;
+    private Pattern checkName = Pattern.compile("[A-Za-z]{2,30}");
 
     public interface OnHeadlineSelectedListener {
         void onArticleSelected(String position);
@@ -58,38 +62,47 @@ public class CreateActionFragment extends BaseFragment {
 
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-        etName = view.findViewById(R.id.name);
-        edittext = (EditText) view.findViewById(R.id.et);
+        etName = view.findViewById(R.id.etName);
+        etCity = view.findViewById(R.id.etCity);
         btnApply = view.findViewById(R.id.apply_btn);
-
-        edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    String country = edittext.getText().toString().trim();
-
-                    mCallback.onArticleSelected(edittext.getText().toString().trim());
-//                    getBaseActivity().startActionFragment(edittext.getText().toString().trim());
-                    return true;
-                }
-                return false;
-            }
-        });
 
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etName.getText().toString().length() > 0) {
-                    getBaseActivity().setName(etName.getText().toString().trim());
-                }
-                mCallback.onArticleSelected(edittext.getText().toString().trim());
+            if (etName.getText().toString().length() > 0) {
+                getBaseActivity().setName(etName.getText().toString().trim());
+            }
+            getBaseActivity().setCity(etCity.getText().toString().trim());
+            }
+        });
+
+        etCity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) return;
+                TextView tv = (TextView) view;
+                validate(tv, checkName, "Неверное имя!");
             }
         });
 
     }
 
+    private void validate(TextView tv, Pattern check, String message) {
+        String value = tv.getText().toString();
+        if (check.matcher(value).matches()) {
+            hideError(tv);
+        } else {
+            showError(tv, message);
+        }
+    }
+
+    private void showError(TextView tv, String message) {
+        tv.setError(message);
+    }
+
+    private void hideError(TextView tv) {
+        tv.setError(null);
+    }
 
     @Override
     public void onStart() {

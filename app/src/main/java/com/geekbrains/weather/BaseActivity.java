@@ -1,6 +1,7 @@
 package com.geekbrains.weather;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BaseActivity extends AppCompatActivity
@@ -26,6 +29,7 @@ public class BaseActivity extends AppCompatActivity
     private TextView textView;
     boolean isExistAction;  // Можно ли расположить рядом фрагмент
     private TextView tvUsername;
+    private TextView tvCountry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class BaseActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,6 +80,27 @@ public class BaseActivity extends AppCompatActivity
             }
         }
 
+        //-- в зависимости от ориентации будем менять параметры элементов view, чтобы смотрелось красиво
+        tvCountry = findViewById(R.id.tv_country);
+        if (isHorizontalOrientation()) {
+            //-- уменьшим ширину и высоту изображения
+            int widthDim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
+            int heightDim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
+            ImageView ivWeather = findViewById(R.id.ivWeather);
+            ivWeather.getLayoutParams().height = heightDim;
+            ivWeather.getLayoutParams().width = widthDim;
+            ivWeather.requestLayout();
+
+            //-- уменьшим размер текста
+            tvCountry.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        }
+
+    }
+
+    public boolean isHorizontalOrientation(){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            return true;
+        return false;
     }
 
     @Override
@@ -183,5 +209,9 @@ public class BaseActivity extends AppCompatActivity
 
     public void setName(String name) {
         tvUsername.setText(name);
+    }
+
+    public void setCity(String city) {
+        tvCountry.setText(city);
     }
 }
