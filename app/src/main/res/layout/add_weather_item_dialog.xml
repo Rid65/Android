@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <EditText
+        android:id="@+id/et_weather_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding_small"
+        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginStart="@dimen/default_padding_small"
+        android:layout_marginTop="@dimen/default_padding"
+        android:inputType="text"
+        android:hint="Температура"/>
+
+    <EditText
+        android:id="@+id/et_weather_humidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding_small"
+        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginStart="@dimen/default_padding_small"
+        android:layout_marginTop="@dimen/default_padding"
+        android:inputType="text"
+        android:hint="Влажность"/>
+
+    <EditText
+        android:id="@+id/et_weather_pressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginBottom="@dimen/default_padding_small"
+        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginStart="@dimen/default_padding_small"
+        android:layout_marginTop="@dimen/default_padding"
+        android:hint="Давление"
+        />
+
+    <EditText
+        android:id="@+id/et_weather_datetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginBottom="@dimen/default_padding_small"
+        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginStart="@dimen/default_padding_small"
+        android:layout_marginTop="@dimen/default_padding"
+        android:hint="Дата"
+        />
+
+</LinearLayout>
