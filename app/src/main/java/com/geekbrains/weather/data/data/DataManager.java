@@ -1,9 +1,12 @@
 package com.geekbrains.weather.data.data;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.geekbrains.weather.model.weather.WeatherRequest;
 import com.geekbrains.weather.retrofit.OpenWeather;
+import com.geekbrains.weather.ui.base.BaseActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,9 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataManager implements IDataManager {
 
-    private static final String BASE_URL = "https://samples.openweathermap.org/";
+    private static final String BASE_URL = "https://api.openweathermap.org/";
     private static final String TAG = "DataManager";
     private OpenWeather openWeather;
+    private OnResponseCompleted responseCompleted;
+    private Context context;
 
     @Override
     public void initRetrofit() {
@@ -32,11 +37,14 @@ public class DataManager implements IDataManager {
     }
 
     @Override
-    public void requestRetrofit(String city, String keyApi) {
-        openWeather.loadWeather(city, keyApi).enqueue(new Callback<WeatherRequest>() {
+    public void requestRetrofit(String lat, String lon, String keyApi) {
+        openWeather.loadWeather(lat, lon, keyApi).enqueue(new Callback<WeatherRequest>() {
             @Override
             public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
-                if (response != null) {
+                if (response != null && response.body() != null) {
+                    sendBroadcastRequest(response.body().getMain().getTemp().toString(),
+                            response.body().getCoord().getLat().toString(),
+                            response.body().getCoord().getLon().toString());
                     Log.d(TAG, response.body().toString());
                 }
             }
@@ -44,8 +52,33 @@ public class DataManager implements IDataManager {
             @Override
             public void onFailure(Call<WeatherRequest> call, Throwable t) {
                 Log.d(TAG, t.getMessage());
-
             }
         });
+    }
+
+    @Override
+    public  void setContext(Context context) {
+        this.context = context;
+    }
+
+
+    private void sendBroadcastRequest(String temperature, String lat, String lon) {
+        try {
+            Intent intent = new Intent(BaseActivity.BROADCAST_ACTION);
+            intent.putExtra(BaseActivity.TEMP_VAL, temperature);
+            intent.putExtra("LAT", lat);
+            intent.putExtra("LON", lon);
+            context.sendBroadcast(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setOnResponseCompleted(OnResponseCompleted responseCompleted) {
+        this.responseCompleted = responseCompleted;
+    }
+
+    public interface OnResponseCompleted {
+        void onCompleted(WeatherRequest weatherRequest);
     }
 }

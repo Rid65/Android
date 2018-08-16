@@ -48,7 +48,8 @@ public class BaseActivity extends AppCompatActivity
         implements BaseView.View, BaseFragment.Callback, NavigationView.OnNavigationItemSelectedListener {
 
     public final static String BROADCAST_ACTION = "BROADCAST_ACTION";
-    public final static String SENSOR_VAL = "SENSOR_VAL";
+    public final static String  SENSOR_VAL = "SENSOR_VAL";
+    public final static String  TEMP_VAL = "TEMP_VAL";
     private static final int PERMISSION_REQUEST_CODE = 111;
     //инициализация переменных
     private FloatingActionButton fab;
@@ -74,8 +75,6 @@ public class BaseActivity extends AppCompatActivity
             contry = savedInstanceState.getString("NAME");
         }
         setContentView(R.layout.activity_base);
-
-        initRetrofit();
 
         initLayout();
 
@@ -109,6 +108,22 @@ public class BaseActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 String value = String.valueOf(intent.getFloatExtra(SENSOR_VAL, 0));
+                String f_temp = intent.getStringExtra(TEMP_VAL);
+                String lat = intent.getStringExtra("LAT");
+                String lon = intent.getStringExtra("LON");
+
+                if (lat != null && lon != null) {
+                    TextView tv_lat = findViewById(R.id.tv_lat);
+                    TextView tv_lon = findViewById(R.id.tv_lon);
+                    tv_lat.setText(lat);
+                    tv_lon.setText(lon);
+                }
+
+                if (f_temp != null) {
+                    TextView tv_temp = findViewById(R.id.bigTemp);
+                    double c_temp = ((Double.parseDouble(f_temp)) - 32) * (5.0/9.0);
+                    tv_temp.setText(Integer.toString((int) Math.round(c_temp)));
+                }
                 Log.d(SENSOR_VAL, value);
             }
         };
@@ -116,11 +131,6 @@ public class BaseActivity extends AppCompatActivity
         registerReceiver(broadcastReceiver, intentValue);
     }
 
-    private void initRetrofit() {
-        IDataManager dataManager = new DataManager();
-        dataManager.initRetrofit();
-        dataManager.requestRetrofit("London,uk", "b6907d289e10d714a6e88b30761fae22");
-    }
 
     private void initLayout() {
         //устанавливает тулбар
